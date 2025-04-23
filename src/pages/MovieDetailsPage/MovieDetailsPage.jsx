@@ -1,46 +1,37 @@
-import { useParams, Outlet, Link, useLocation } from 'react-router-dom';
-import { useEffect, useState, Suspense } from 'react';
-import { fetchMovieDetails } from '../../services/api';
-import css from './MovieDetailsPage.module.css';
+import { useEffect, useRef, useState } from "react";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import { getMovieById } from "../../services/tmdbApi";
 
-const MovieDetailsPage = () => {
+function MovieDetailsPage() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
-  const backLink = location.state?.from ?? '/';
+  const backLinkRef = useRef(location.state?.from ?? "/movies");
 
   useEffect(() => {
-    fetchMovieDetails(movieId).then(setMovie);
+    getMovieById(movieId).then(setMovie);
   }, [movieId]);
 
   if (!movie) return <div>Loading...</div>;
 
-  const { title, overview, genres, poster_path } = movie;
-
   return (
-    <div className={css.container}>
-      <Link to={backLink}>← Go back</Link>
-      <div className={css.details}>
-        <img src={`https://image.tmdb.org/t/p/w300${poster_path}`} alt={title} />
-        <div>
-          <h2>{title}</h2>
-          <p>{overview}</p>
-          <ul>
-            {genres.map(g => <li key={g.id}>{g.name}</li>)}
-          </ul>
-        </div>
-      </div>
+    <div>
+      <Link to={backLinkRef.current}>← Go back</Link>
+      <h2>{movie.title}</h2>
+      <p>{movie.overview}</p>
 
-      <div className={css.links}>
-        <Link to="cast">Cast</Link>
-        <Link to="reviews">Reviews</Link>
-      </div>
+      <ul>
+        <li>
+          <Link to="cast">Cast</Link>
+        </li>
+        <li>
+          <Link to="reviews">Reviews</Link>
+        </li>
+      </ul>
 
-      <Suspense fallback={<div>Loading subpage...</div>}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </div>
   );
-};
+}
 
 export default MovieDetailsPage;

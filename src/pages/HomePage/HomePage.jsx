@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
-import { fetchTrending } from '../../services/api';
+import { fetchTrendingMovies } from '../../services/tmdbApi';
 import MovieList from '../../components/MovieList/MovieList';
-import css from './HomePage.module.css';
+import styles from './HomePage.module.css';
 
-const HomePage = () => {
+function HomePage() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetchTrending().then(setMovies);
+    fetchTrendingMovies().then(setMovies);
   }, []);
 
   return (
-    <div className={css.container}>
-      <h1>Trending today</h1>
+    <div className={styles.container}>
+      <h1>Trending Movies</h1>
       <MovieList movies={movies} />
     </div>
   );
-};
+}
 
 export default HomePage;
