@@ -21,6 +21,13 @@ export const getMovieById = async (query) => {
   return response.data.results;
 };
 
+export const searchMovies = async (query) => {
+  const response = await axios.get(
+    `${BASE_URL}/search/movie?query=${query}&include_adult=false&language=en-US&page=1&api_key=${API_KEY}`
+  );
+  return response.data.results;
+};
+
 
 export const fetchMovieDetails = async (id) => {
   const response = await axios.get(`${BASE_URL}/movie/${id}`, options);
