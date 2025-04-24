@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
-const API_TOKEN = '0bf2d873828383136252a9c89ed588e7'; // сюди встав токен
+const API_TOKEN = '0bf2d873828383136252a9c89ed588e7';
 
 const options = {
   headers: {
