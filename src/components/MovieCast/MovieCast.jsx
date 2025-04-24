@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchCast } from '../../services/api';
+import { fetchMovieCredits } from '../../services/tmdbApi';
 
 const MovieCast = () => {
   const { movieId } = useParams();
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
-    fetchCast(movieId).then(setCast);
+    fetchMovieCredits(movieId).then(setCast);
   }, [movieId]);
 
   return (

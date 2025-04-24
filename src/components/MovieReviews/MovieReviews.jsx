@@ -1,13 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchReviews } from '../../services/api';
+import { fetchMovieReviews } from '../../services/tmdbApi';
+
 
 const MovieReviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetchReviews(movieId).then(setReviews);
+    fetchMovieReviews(movieId).then(setReviews);
   }, [movieId]);
 
   return (

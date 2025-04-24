@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import { getMovieById } from "../../services/tmdbApi";
+import { useEffect, useRef, useState } from "react";
+import { fetchMovieDetails } from "../../services/tmdbApi";
 
 function MovieDetailsPage() {
   const { movieId } = useParams();
@@ -9,7 +9,7 @@ function MovieDetailsPage() {
   const backLinkRef = useRef(location.state?.from ?? "/movies");
 
   useEffect(() => {
-    getMovieById(movieId).then(setMovie);
+    fetchMovieDetails(movieId).then(setMovie);
   }, [movieId]);
 
   if (!movie) return <div>Loading...</div>;
@@ -29,6 +29,7 @@ function MovieDetailsPage() {
         </li>
       </ul>
 
+      {/* оце найголовніше для відображення вкладених компонентів */}
       <Outlet />
     </div>
   );
